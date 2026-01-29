@@ -9,8 +9,7 @@ from app.config import GITHUB_TOKEN, GROQ_API_KEY
 
 class GroqLLM(LLM):
     client: Groq
-    model: str = "llama-3.1-70b-versatile"
-
+    model: str = "llama3-70b-8192"
 
     def __init__(self):
         super().__init__()
@@ -43,4 +42,10 @@ def create_agent():
     )
 
     return agent
+
+
+
+
+
+
 

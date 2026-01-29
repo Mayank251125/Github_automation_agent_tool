@@ -32,3 +32,5 @@ def generate_readme_cli(project: str, features: str):
 
 if __name__ == "__main__":
     app()
+
+
