@@ -1,0 +1,6 @@
+groq
+langchain==0.1.14
+PyGithub
+GitPython
+python-dotenv
+pymarkdown
