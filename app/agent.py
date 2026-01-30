@@ -9,7 +9,8 @@ from app.config import GITHUB_TOKEN, GROQ_API_KEY
 
 class GroqLLM(LLM):
     client: Groq
-    model: str = "llama3-70b-8192"
+    model: str ="llama-3.1-8b-instant"
+
 
     def __init__(self):
         super().__init__()
@@ -17,7 +18,7 @@ class GroqLLM(LLM):
 
     @property
     def _llm_type(self) -> str:
-        return "groq-llama3-70b"
+        return "groq-llama-3.1-8b-instant"
 
     def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
         response = self.client.chat.completions.create(

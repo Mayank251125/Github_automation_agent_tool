@@ -4,13 +4,19 @@ from app.readme_generator import generate_readme
 
 app = typer.Typer()
 
-@app.command()
-def create_repo(name: str, description: str = ""):
-    print(create_repository(name, description))
+import typer
 
 @app.command()
-def commit(repo_path: str, message: str):
-    print(commit_and_push(repo_path, message))
+def create_repo(
+    name: str,
+    description: str = typer.Option("", "--description", "-d", help="Repository description"),
+):
+    print(create_repository(name, description))
+
+
+@app.command()
+def commit(repo_url: str, message: str):
+    print(commit_and_push(repo_url, message))
 
 @app.command()
 def create_issue_cli(repo: str, title: str, body: str):

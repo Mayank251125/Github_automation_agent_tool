@@ -19,17 +19,46 @@ def create_repository(name, description=""):
         return f"GitHub Error: {str(e)}"
 
 
-def commit_and_push(repo_path, commit_msg):
+import tempfile
+import shutil
+from git import Repo
+import os
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+def commit_and_push(repo_url: str, message: str):
+    token = os.getenv("GITHUB_TOKEN")
+    if not token:
+        raise ValueError("GITHUB_TOKEN not found in environment")
+
+    # Inject token into HTTPS URL
+    auth_repo_url = repo_url.replace(
+        "https://",
+        f"https://{token}@"
+    )
+
+    temp_dir = tempfile.mkdtemp()
+
     try:
-        repo = Repo(repo_path)
+        repo = Repo.clone_from(auth_repo_url, temp_dir)
+
+        readme_path = os.path.join(temp_dir, "README.md")
+        if not os.path.exists(readme_path):
+            with open(readme_path, "w", encoding="utf-8") as f:
+                f.write("# Automated Commit\n\nInitial commit.")
+
         repo.git.add(A=True)
-        repo.index.commit(commit_msg)
+        repo.index.commit(message)
         repo.remote(name="origin").push()
-        return "Changes committed & pushed successfully."
-    except (InvalidGitRepositoryError, NoSuchPathError):
-        return "Invalid git repository path."
-    except Exception as e:
-        return f"Git Error: {str(e)}"
+
+        return "Commit & push successful!"
+
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+
 
 
 def create_issue(repo_name, title, body):
