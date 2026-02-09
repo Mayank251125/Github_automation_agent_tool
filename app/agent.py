@@ -1,48 +1,67 @@
-from langchain.agents import initialize_agent, AgentType
-from langchain.llms.base import LLM
-from langchain.tools.github import GitHubToolkit
-from github import Github
-from groq import Groq
-from typing import Optional, List
-from app.config import GITHUB_TOKEN, GROQ_API_KEY
+from langchain.agents import create_agent
+from app.llm import get_llm
+from app.tools import (
+    create_github_repository_tool,
+    create_issue_tool,
+    audit_repo_tool,
+    commit_and_push_file_tool,
+    create_readme_file_tool,
+)
+
+system_prompt = """
+You are a GitHub automation assistant.
+
+VERY IMPORTANT RULES:
+
+- Only execute the EXACT action requested by the user.
+- Do NOT perform additional actions.
+- Do NOT create commits, pull requests, issues or audits
+  unless the user explicitly asks for them.
+- If the user says "create repository", ONLY create the repository.
+-If the user wants to CREATE a repository → use create_repository_tool.
+-If the user wants to GENERATE a README → use generate_readme_tool.
+-When user asks to generate README,use generate_readme_tool.
+-Do not refuse.
+-Return the generated markdown content directly.
+
+-Always choose the most appropriate tool based strictly on the user's intent.
 
 
-class GroqLLM(LLM):
-    client: Groq
-    model: str ="llama-3.1-8b-instant"
+Be concise and precise.
+"""
 
 
-    def __init__(self):
-        super().__init__()
-        self.client = Groq(api_key=GROQ_API_KEY)
+def create_github_agent():
+    llm = get_llm()
 
-    @property
-    def _llm_type(self) -> str:
-        return "groq-llama-3.1-8b-instant"
+    tools = [
+        create_github_repository_tool,
+        create_issue_tool,
+        audit_repo_tool,
+        commit_and_push_file_tool,
+        create_readme_file_tool,
+    ]
 
-    def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1,
-        )
-        return response.choices[0].message.content
-
-
-def create_agent():
-    llm = GroqLLM()
-
-    github_client = Github(GITHUB_TOKEN)
-    toolkit = GitHubToolkit.from_github_client(github_client)
-
-    agent = initialize_agent(
-        tools=toolkit.get_tools(),
-        llm=llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True
+    agent = create_agent(
+        model=llm,
+        tools=tools,
+        system_prompt=system_prompt,
     )
 
     return agent
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

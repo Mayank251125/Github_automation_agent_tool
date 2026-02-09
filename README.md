@@ -1,116 +1,200 @@
-**Stock Market Analysis Tool**
-=====================================
+# GitHub Automation Agent
 
-**Project Description**
-------------------------
+---
 
-The Stock Market Analysis Tool is a comprehensive Python application designed to fetch stock data, perform technical analysis, and generate charts to help investors make informed decisions. This tool utilizes popular libraries such as `yfinance` for data fetching and `matplotlib` for chart generation.
+## Overview
 
-**Features**
-------------
+The **GitHub Automation Agent** is a Chat-based intelligent system that automates common GitHub workflows using natural language instructions. It integrates LLM-powered reasoning with GitHub API tools to perform repository management, issue handling,audit or recommend best github practices, and automated README generation.
 
-*   Fetches historical stock data from Yahoo Finance
-*   Performs technical analysis, including moving averages, RSI, and Bollinger Bands
-*   Generates charts to visualize stock performance and trends
+The project focuses exclusively on the GitHub Automation Agent component of a larger multi-agent AI architecture. It is built using LangChain with an API-based LLM backend and emphasizes modular design, automation reliability, and extensibility rather than UI complexity.
 
-**Installation**
----------------
+---
 
-To install the Stock Market Analysis Tool, follow these steps:
+## Demo Video
 
-1.  Clone the repository using Git:
-    ```bash
-git clone https://github.com/your-username/stock-market-analysis-tool.git
+ 👉 **https://drive.google.com/file/d/1mS60S_hcMCWruB_v0rU2JU6mtRsTMoII/view?usp=drive_link**
+
+---
+
+## 📁 Project Structure
+
 ```
-2.  Install the required libraries using pip:
-    ```bash
-pip install -r requirements.txt
-```
-3.  Install the `yfinance` library using pip:
-    ```bash
-pip install yfinance
-```
-4.  Install the `matplotlib` library using pip:
-    ```bash
-pip install matplotlib
-```
+GITHUB-AUTOMATION-AGENT
+│
+├── app/
+│ ├── init.py
+│ ├── agent.py             # Core agent logic and orchestration
+│ ├── config.py            # Environment configuration
+│ ├── github_tools.py      # GitHub API interaction functions
+│ ├── llm.py               # LLM setup and configuration
+│ ├── readme_generator.py  # README generation logic
+│ ├── tools.py             # Tool definitions
+│
+├── chat.py                # Chat interaction entry point
+├── requirements.txt       # Project dependencies
+├── .env                   # Environment variables (excluded from Git)
+├── .gitignore             # Git ignore rules
+├── README.md              # Project documentation
 
-**Usage Examples**
-------------------
-
-### Fetching Stock Data
-
-```python
-from stock_market_analysis_tool import StockDataFetcher
-
-stock_symbol = "AAPL"
-fetcher = StockDataFetcher(stock_symbol)
-data = fetcher.fetch_data()
-
-print(data.head())
 ```
 
-### Performing Technical Analysis
+---
 
-```python
-from stock_market_analysis_tool import TechnicalAnalyzer
+## Key Capabilities
 
-stock_symbol = "AAPL"
-analyzer = TechnicalAnalyzer(stock_symbol)
-analysis = analyzer.analyze()
+- Natural language → GitHub action execution  
+- Repository creation and management  
+- Issue creation and listing  
+- Automated README generation  
+- Files commit and push
+- Audit Github repository 
+- Modular tool-based architecture  
+- Chat-based interaction  
+- Secure environment-based authentication  
 
-print(analysis)
-```
+---
 
-### Generating Charts
+## Safety Design
 
-```python
-from stock_market_analysis_tool import ChartGenerator
+The agent is designed with controlled GitHub API execution:
 
-stock_symbol = "AAPL"
-generator = ChartGenerator(stock_symbol)
-chart = generator.generate_chart()
+- All GitHub operations are executed via authenticated API calls
+- Sensitive credentials are stored securely using `.env`
+- No hardcoded tokens in source code
+- Tool-based architecture prevents arbitrary chat-command execution
+- Designed to avoid unintended destructive operations
 
-chart.show()
-```
+---
 
-**Environment Setup**
----------------------
+## Technology Stack
 
-To run the Stock Market Analysis Tool, you will need to have the following environment variables set:
+- **Language:** Python  
+- **AI Framework:** LangChain  
+- **LLM Backend:** Groq API (LLaMA 3.1 – 8B Instant)  
+- **GitHub Integration:** GitHub REST API  
+- **Environment Management:** python-dotenv  
+- **Interface:** Terminal / Chat  
 
-*   `YAHOO_API_KEY`: Your Yahoo Finance API key (optional)
-*   `MATPLOTLIB_BACKEND`: The backend to use for matplotlib (e.g., `Agg` for headless rendering)
+---
 
-You can set these environment variables using the following commands:
+##  Setup Instructions
+
+### 1️⃣ Clone the Repository: 
 
 ```bash
-export YAHOO_API_KEY="your_api_key"
-export MATPLOTLIB_BACKEND="Agg"
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
 ```
 
-**Contribution Guide**
-----------------------
+### 2️⃣ Create & Activate Virtual Environment
 
-We welcome contributions to the Stock Market Analysis Tool! To contribute, follow these steps:
+```bash
+python -m venv venv
+venv\Scripts\activate   # Windows
+```
 
-1.  Fork the repository on GitHub
-2.  Create a new branch for your feature or bug fix
-3.  Commit your changes with a clear and descriptive commit message
-4.  Push your changes to your forked repository
-5.  Open a pull request to merge your changes into the main repository
+### 3️⃣ Install Dependencies
 
-**License**
-----------
+```bash
+pip install -r requirements.txt
+```
 
-The Stock Market Analysis Tool is licensed under the MIT License. See the `LICENSE` file for details.
+### 4️⃣ Configure Environment Variables
 
-**Acknowledgments**
-------------------
+Create a `.env` file in the project root:
 
-This project was inspired by various open-source projects and libraries, including `yfinance` and `matplotlib`. We thank the developers and contributors of these projects for their hard work and dedication.
+```env
+GROQ_API_KEY=your_groq_api_key_here
+GITHUB_TOKEN=your_github_classic_token_key_here
+```
 
-**Contact**
-----------
+## ▶️ Running the Agent
 
-If you have any questions or need further assistance, please don't hesitate to contact us at [your-email@example.com](mailto:your-email@example.com).
+```bash
+python chat.py
+```
+
+---
+
+##  Supported Chat Capabilities/Commands (Examples)
+
+### 🔹 Repository Management:
+
+```text
+create a new repository named demo-project 
+```
+
+### 🔹 README Generation:
+
+```text
+commit and push chat.py in repo demo-project 
+```
+
+```text
+commit and push app/tools.py in repo demo-project 
+```
+
+### 🔹 Issue Management:
+
+```text
+create an issue named repo-issue in repo demo-project with description high risk error
+```
+
+### README Generation:
+
+```text
+Generate a README.md file for my repo demo-project
+```
+
+### 🔹 Audit/Analysing the repository: 
+
+```text
+Call audit_repo_tool with repo="Mayank251125/Stock_Market_Analysis_Tool"
+```
+
+---
+
+##  Design Philosophy
+
+* LLM used strictly for reasoning and decision making
+* GitHub actions executed programmatically via tools
+* Modular architecture for easy extensibility
+* Secure token management using environment variables
+* Model-agnostic design for future LLM flexibility
+* Chat-based interaction for simplicity and clarity
+
+---
+
+##  Future Enhancements
+
+* GitHub Webhook automation
+* CI/CD integration support
+* Multi-repository orchestration
+* LangGraph-based multi-agent coordination
+* Web-based interface using FastAPI
+* Advanced repository analytics
+
+---
+
+##  Author
+
+**Mayank Joshi**
+VIT Bhopal University
+
+**Project Component:**
+Project Component: Multi-Agent AI System — *GitHub Automation Agent*
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
