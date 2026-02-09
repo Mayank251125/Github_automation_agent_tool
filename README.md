@@ -124,26 +124,26 @@ python chat.py
 create a new repository named demo-project 
 ```
 
-### 🔹 README Generation:
+### 🔹 COMMIT and PUSH in repository:
 
 ```text
-commit and push chat.py in repo demo-project 
+commit and push chat.py in repo Mayank251125/demo-project 
 ```
 
 ```text
-commit and push app/tools.py in repo demo-project 
+commit and push app/tools.py in repo Mayank251125/demo-project 
 ```
 
 ### 🔹 Issue Management:
 
 ```text
-create an issue named repo-issue in repo demo-project with description high risk error
+create an issue named repo-issue in repo Mayank251125/demo-project with description high risk error
 ```
 
 ### README Generation:
 
 ```text
-Generate a README.md file for my repo demo-project
+Generate a README.md file for my repo Mayank251125/demo-project
 ```
 
 ### 🔹 Audit/Analysing the repository: 
@@ -168,7 +168,7 @@ Call audit_repo_tool with repo="Mayank251125/Stock_Market_Analysis_Tool"
 ##  Future Enhancements
 
 * GitHub Webhook automation
-* CI/CD integration support
+* Pull request enhancement + Auto merge system
 * Multi-repository orchestration
 * LangGraph-based multi-agent coordination
 * Web-based interface using FastAPI
