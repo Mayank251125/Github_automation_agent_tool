@@ -70,7 +70,7 @@ The agent is designed with controlled GitHub API execution:
 
 - **Language:** Python  
 - **AI Framework:** LangChain  
-- **LLM Backend:** Groq API (LLaMA 3.1 – 8B Instant)  
+- **LLM Backend:** Groq API (LLama 3.1 – 8B Instant)  
 - **GitHub Integration:** GitHub REST API  
 - **Environment Management:** python-dotenv  
 - **Interface:** Terminal / Chat  
